@@ -1,0 +1,98 @@
+<html>
+<head>
+<link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.1/jquery.min.js" ></script>
+
+
+</head>
+
+<body>
+<form method="post" action="">
+{% csrf_token %}
+                    <input type="hidden" value="0" id="count" name="count">
+
+    <div class="container">
+    <div class="row clearfix">
+		<div class="col-md-12 column">
+			<table class="table table-bordered table-hover" id="tab_logic">
+				<thead>
+					<tr >
+						<th class="text-center">
+							Pass Name
+						</th>
+						<th class="text-center">
+							Time
+						</th>
+						<th class="text-center">
+							Start Floor
+						</th>
+						<th class="text-center">
+							Destination Floor
+						</th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr id='addr0'>
+						<td>
+						<input type="text" name='first0'  placeholder='Name' class="form-control"/>
+						</td>
+						<td>
+						<input type="text" name='second0' readonly placeholder='Time' value="0" class="form-control"/>
+						</td>
+						<td>
+						<input type="text" name='third0' placeholder='Start' class="form-control"/>
+						</td>
+						<td>
+						<input type="text" name='four0'  placeholder='End' class="form-control"/>
+						</td>
+					</tr>
+                    <tr id='addr1'></tr>
+				</tbody>
+
+			</table>
+
+		</div>
+	</div>
+	<a id="add_row" class="btn btn-default pull-left">Add Row</a>
+    <a id='delete_row' class="btn btn-default">Delete Row</a>
+	<button type = "submit" class = "btn btn-primary btn-sm pull-right" style="margin-left:35%">
+      Trace
+   </button>
+</div>
+</form>
+<script>
+     $(document).ready(function(){
+      var i=1;
+     $("#add_row").click(function(){
+      $('#count').val(i+1)
+      $('#addr'+i).html("<td><input type='text' name='first"+(i)+"'  placeholder='FirstInput' class='form-control'/></td><td><input name='second"+i+"' type='text' placeholder='SecondInput' class='form-control input-md'  /> </td><td><input  name='third"+i+"' type='text' placeholder='ThirdInput'  class='form-control input-md'></td><td><input  name='four"+i+"' type='text' placeholder='FourthInput'  class='form-control input-md'></td>");
+
+      $('#tab_logic').append('<tr id="addr'+(i+1)+'"></tr>');
+      i++;
+  });
+     $("#delete_row").click(function(){
+    	 if(i>1){
+    	 $('#count').val(i-1)
+		 $("#addr"+(i-1)).html('');
+		 i--;
+		 }
+	 });
+
+});
+</script>
+<h3>
+{% if answer %}
+Total Time Travelled by elevator = {{ answer }}
+</h3>
+    {% endif %}
+    {% for i in msg %}
+<h4>
+    {{ i }}
+    <br>
+
+</h4>
+
+    {% endfor %}
+</body>
+</html>
